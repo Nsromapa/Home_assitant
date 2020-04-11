@@ -1,15 +1,13 @@
-import pyttsx3
-import time
+import pickle
 
-i  = 0
+from classifier_cleaner import input_process
 
-def talkback(x):
-    time.sleep(1)
-    talk = pyttsx3.init()
-    rate = talk.getProperty('rate')
-    talk.setProperty('rate', rate-10)
-    voices = talk.getProperty('voices')
-    talk.setProperty('voice', voices[i].id)
-    talk.say(x)
-  #  time.sleep(1)
-    talk.runAndWait()
+ans = input_process('how will the weather be today')
+
+classifier = pickle.load(open('classifier_model.sav', 'rb'))
+results = classifier.predict(ans)
+
+print(results)
+
+if results == 'weather':
+  print('go ahead')

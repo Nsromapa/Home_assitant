@@ -18,6 +18,8 @@ from instapy_cli import client
 import tweepy 
 import wolframalpha
 import wikipedia
+from classifier_cleaner import input_process
+
 
 
 
@@ -32,7 +34,7 @@ greeting_reponse = ["hello", "hi there","what's good", "ey", "what's up", "hi"]
 morning = ["good morning", "goodmorning"]
 afternoon = ["good afternoon", "goodafternoon"]
 evening = ["good evening", "goodevening"]
-time_asking = ['what time is it?','what time is it','what is the time','what say the time']
+time_asking = ['what time is it?','what time is it','what is the time','what says the time']
 note_ = ['note this down','remember this','remember this for me','write this down for me']
 calender_ = ['what do i have today?', 'what are my plans for today?']
 email_ = ["email", 'mail']
@@ -41,6 +43,10 @@ wolf_ =['+','-','*', '/', '=']
 
 #Voice set to male by default
 i=0
+
+#Loading classifier 
+classifier = pickle.load(open('classifier_model.sav', 'rb'))
+
 
 #functions of the system
 def talkback(x):
@@ -73,22 +79,10 @@ def speech_to_text():
     try:
             #converting request from user to text
         user_input = r.recognize_google(audio)
-        print("You said:",user_input)
+        return user_input
             
     except sr.UnknownValueError:
-        print("Sorry I can't understand you, can you repeat what you said;")
-
-        try: 
-                #converting request from user to text if the system couldnt understand at the first try
-            
-            r.adjust_for_ambient_noise(source)
-            r.dynamic_energy_threshold= True
-            audio = r.listen(source)
-            user_input= r.recognize_google(audio)
-            print("You said:",user_input)
-        except sr.UnknownValueError:
-            print("Sorry i still can't get you, you have to type your request.")
-            
+        talkback("Sorry i don't get you, can you come again")          
             
     except sr.RequestError:
             # Connection/ request error handling
@@ -357,11 +351,10 @@ except Exception:
 def main_sys(user_input):
     time_now = datetime.datetime.now().hour
     time_now_min = datetime.datetime.now().minute
- 
-    if user_input in greetings_user:
-        talkback(random.choice(greeting_reponse))
+    category = ""
 
-    elif user_input in morning:
+
+    if user_input in morning:
         if time_now <12:
             talkback("good morning")
         elif time_now >= 12 and time_now < 16:
@@ -370,6 +363,7 @@ def main_sys(user_input):
         else:
             time_s = str(time_now)
             talkback("its "+time_s+" pm, good evening")
+
 
     elif user_input in afternoon:
         if time_now <12:
@@ -380,7 +374,6 @@ def main_sys(user_input):
         else:
             time_s = str(time_now)
             talkback("its "+time_s+" pm")
-    
     elif user_input in evening:
         if time_now <12:
             talkback("its"+time_s+"in the morning")
@@ -390,19 +383,55 @@ def main_sys(user_input):
         else:
             time_s = str(time_now)
             talkback("Good evening, how was your day?")
-  
-    elif "how do you do" in user_input:
-        talkback("how do you do?")
 
-    elif 'switch voice to male' in user_input:
-        i=0
-        talkback("This is just a trial and i willl try and make")
+
+
+    else:
+       
+        data = input_process(user_input)
+
+
+        
+        try:
+            category = classifier.predict(data)
+        except Exception:
+            talkback("Sorry i didn't get you, can you come again?")
     
-    elif 'switch voice to female' in user_input:
-        i=1
-        talkback("This is just a trial and i willl try and make")
+    if category == 'chat':
+        pass
 
-    elif user_input in time_asking:
+    elif category == 'def':
+        wiki(user_input)
+    
+    elif category == 'email':
+        send_email()
+
+    elif category == 'facts':
+        ques_ans_math_facts(user_input)
+
+    elif category == 'media':
+        pass
+
+    elif category == 'note':
+        note()
+
+    elif category == 'math':
+        ques_ans_math_facts(user_input)
+
+    elif category == 'event':
+        date_ = get_date(user_input)
+        if date_:
+            get_events(date_, SERVICE)
+        else:
+            talkback("I don't understand you!")
+
+    elif category == 'weather':
+        weather_condition()
+
+    elif category == ' req_':
+        pass
+
+    elif category == 'time':
         if time_now>12:
             time_ = time_now-12
             time_min = datetime.datetime.now().minute
@@ -413,34 +442,99 @@ def main_sys(user_input):
             time_min = datetime.datetime.now().minute
             time_req = str(time_)+" "+str(time_min)+"am"
             talkback(time_req)
-    
-    elif user_input in email_:
-        send_email()
-    
-    elif user_input in note_:
-        note()
-    
-    elif user_input in wolf_:
-        talkback(ques_ans_math_facts(user_input))
-    
-    elif 'who is' in user_input:
-        talkback(wiki(user_input))
 
-    elif user_input in calender_:
-        date_ = get_date(user_input)
-        if date_:
-            get_events(date_, SERVICE)
-        else:
-            talkback("I don't understand you!")
-    
-    elif 'weather' in user_input:
-        weather_condition()        
-
-    elif 'instagram' in user_input:
-        insta_post()
+    elif category == "":
+        pass
 
     else:
         talkback("Sorry i didn't get you, can you come again?")
+
+
+
+    
+    #if user_input in greetings_user:
+        #talkback(random.choice(greeting_reponse))
+
+    #elif user_input in morning:
+        #if time_now <12:
+         #   talkback("good morning")
+        #elif time_now >= 12 and time_now < 16:
+         #   time_s = str(time_now) 
+          #  talkback("its "+time_s+" pm, good afternoon")
+        #else:
+         #   time_s = str(time_now)
+          #  talkback("its "+time_s+" pm, good evening")
+
+    #elif user_input in afternoon:
+        #if time_now <12:
+         #   talkback("its"+time_s+"in the morning")
+        #elif time_now >= 12 and time_now < 16:
+         #   time_s = str(time_now) 
+          #  talkback("good afternoon, is there anything i can do for you?")
+        #else:
+         #   time_s = str(time_now)
+          #  talkback("its "+time_s+" pm")
+    
+    #elif user_input in evening:
+      #  if time_now <12:
+       #     talkback("its"+time_s+"in the morning")
+        #elif time_now >= 12 and time_now < 16:
+         #   time_s = str(time_now) 
+          #  talkback("It's still afternoon, is there anything i can do for you?")
+        #else:
+         #   time_s = str(time_now)
+          #  talkback("Good evening, how was your day?")
+  
+    #elif "how do you do" in user_input:
+        #talkback("how do you do?")
+
+    #elif 'switch voice to male' in user_input:
+        #i=0
+        #talkback("This is just a trial and i willl try and make")
+    
+    #elif 'switch voice to female' in user_input:
+      #  i=1
+       # talkback("This is just a trial and i willl try and make")
+
+    #elif user_input in time_asking:
+     #   if time_now>12:
+      #      time_ = time_now-12
+       #     time_min = datetime.datetime.now().minute
+        #    time_req = str(time_)+" "+str(time_min)+"pm"
+         #   talkback(time_req)
+        #else:
+        #    time_ = time_now
+         #   time_min = datetime.datetime.now().minute
+          #  time_req = str(time_)+" "+str(time_min)+"am"
+           # talkback(time_req)
+    
+    #elif user_input in email_:
+       # send_email()
+    
+    #elif user_input in note_:
+     #   note()
+    
+    #elif user_input in wolf_:
+    #    talkback(ques_ans_math_facts(user_input))
+    
+    #elif 'who is' in user_input:
+    #    talkback(wiki(user_input))
+
+    #elif user_input in calender_:
+    #    date_ = get_date(user_input)
+     #   if date_:
+      #      get_events(date_, SERVICE)
+       # else:
+        #    talkback("I don't understand you!")
+    
+    #elif 'weather' in user_input:
+    #    weather_condition()        
+
+    #elif 'instagram' in user_input:
+    #    insta_post()
+
+    #else:
+    #    talkback("Sorry i didn't get you, can you come again?")
     
             
    

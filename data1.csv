@@ -1,0 +1,523 @@
+,statement,category
+0,"['send', 'mail']",email
+1,"['help', 'send', 'email']",email
+2,"['send', 'email']",email
+3,"['help', 'send', 'mail']",email
+4,['email'],email
+5,['mail'],email
+6,"['mail', 'email']",email
+7,"['send', 'email', '?']",email
+8,"['send', 'mail', '?']",email
+9,"['need', 'send', 'email']",email
+10,"['need', 'send', 'mail']",email
+11,['email'],email
+12,['mail'],email
+13,"['want', 'send', 'email']",email
+14,"['want', 'send', 'mail']",email
+15,"['need', 'send', 'email']",email
+16,"['need', 'send', 'mail']",email
+17,"['email', 'someone']",email
+18,"['need', 'email', 'someone']",email
+19,"['want', 'email', 'someone']",email
+20,"['send', 'email', 'someone']",email
+21,"['need', 'send', 'mail', 'someone']",email
+22,"['need', 'send', 'email', 'someone']",email
+23,"['send', 'mail', 'someone']",email
+24,['mail'],email
+25,['email'],email
+26,"['send', 'mail']",email
+27,"['send', 'email']",email
+28,"['send', 'email']",email
+29,"['send', 'mail']",email
+30,"['send', 'email']",email
+31,"['send', 'mail']",email
+32,"['forward', 'mail']",email
+33,"['forward', 'email']",email
+34,"['forward', 'mail']",email
+35,"['forward', 'email']",email
+36,"['want', 'send', 'mail']",email
+37,"['need', 'send', 'mail']",email
+38,"['nee', 'send', 'email']",email
+39,"['want', 'send', 'email']",email
+40,"['send', 'mail']",email
+41,"['send', 'email']",email
+42,"['push', 'email']",email
+43,"['push', 'mail']",email
+44,"['let', ""'s"", 'send', 'mail']",email
+45,"['let', ""'s"", 'send', 'email']",email
+46,"['send', 'email']",email
+47,"['need', 'send', 'mail']",email
+48,"['let', ""'s"", 'send', 'mail']",email
+49,"['let', ""'s"", 'send', 'email']",email
+50,"['email', 'time']",email
+51,"['mail', 'time']",email
+52,['email'],email
+53,['mail'],email
+54,['email'],email
+55,['mail'],email
+56,"['mail', 'sending']",email
+57,"['email', 'sending']",email
+58,"['deliver', 'mail']",email
+59,"['deliver', 'email']",email
+60,"['bill', 'gate']",def
+61,"['elon', 'musk']",def
+62,"['tell', 'mark', 'zuckerburg']",def
+63,['charles'],def
+64,"['need', 'information', 'bill', 'gate']",def
+65,"['janet', 'doe']",def
+66,['sarkodie'],def
+67,"['shatta', 'wale']",def
+68,['stonebwoy'],def
+69,"['barrack', 'obama']",def
+70,"['akuffo', 'addo']",def
+71,['brian'],def
+72,"['tell', 'something', 'brian']",def
+73,"['tell', 'something', 'jeff']",def
+74,"['know', 'bill', 'gate']",def
+75,"['know', 'mark']",def
+76,"['know', 'adam']",def
+77,['adam'],def
+78,['professor'],def
+79,"['want', 'know', 'james']",def
+80,"['want', 'know', 'something', 'james']",def
+81,"['want', 'know', 'something', 'brian']",def
+82,"['want', 'know', 'something', 'bill', 'gate']",def
+83,"['tell', 'bill', 'gate']",def
+84,"['tell', 'jeffery']",def
+85,"['know', 'jeffery']",def
+86,"['give', 'information', 'mark', 'zuckerburg']",def
+87,"['give', 'info', 'mark', 'zuckerburg']",def
+88,"['give', 'something', 'francis']",def
+89,['francis'],def
+90,"['know', 'francis']",def
+91,"['tell', 'ryan']",def
+92,"['know', 'anything', 'donald', 'trump']",def
+93,"['donald', 'trump']",def
+94,"['know', 'anything', 'barrack']",def
+95,"['know', 'anything', 'francis']",def
+96,"['know', 'anything', 'Nelson']",def
+97,"['let', 'talk', 'bill', 'gate']",def
+98,"['let', 'talk', 'mark', 'zuckerburg']",def
+99,"['let', 'talk', 'elon', 'musk']",def
+100,"['elon', 'musk']",def
+101,"['bill', 'gate']",def
+102,"['mark', 'zuckerburg']",def
+103,"['barrack', 'obama']",def
+104,['science'],def
+105,['biology'],def
+106,['program'],def
+107,['animal'],def
+108,['specie'],def
+109,['engineering'],def
+110,"['define', 'signal']",def
+111,"['define', 'programming', 'language']",def
+112,"['define', 'programme']",def
+113,"['food', 'storage']",def
+114,"['food', 'spoilage']",def
+115,['preservation'],def
+116,"['define', 'preservation']",def
+117,"['tell', 'program']",def
+118,"['tell', 'artificial', 'intelligence']",def
+119,"['machine', 'learning']",def
+120,"['deep', 'learning']",def
+121,"['explaing', 'machine', 'learning']",def
+122,"['define', 'A.I']",def
+123,"['definition', 'friction']",def
+124,"['explain', 'reflection']",def
+125,"['X', '+', '12', '=', '30']",math
+126,"['X', '-', '34', '=', '45']",math
+127,"['X', '+', '23', '=', '56']",math
+128,"['X', '*', '3', '=', '56']",math
+129,"['X', '/4', '=', '20']",math
+130,"['X', '+', '16', '=', '37']",math
+131,"['X', '+', '22', '=', '30']",math
+132,"['X', '+', '10', '=', '30']",math
+133,"['X', '+', '12', '=', '350']",math
+134,"['X', '+', '12', '=', '3']",math
+135,"['X', '-', '20', '=', '100']",math
+136,"['Y', '=', '20', '=', '30']",math
+137,"['Z', '=', '20', '+50']",math
+138,"['X', '=', '40', '+40']",math
+139,"['Z', '*', '10', '=', '100']",math
+140,"['Y', '*', '3', '=', '20']",math
+141,"['Z', '/5', '=', '233']",math
+142,"['Y', '-', '49', '=', '34']",math
+143,"['X', '+', '(', '34', '-43', ')', '=', '34']",math
+144,"['Y', '/', '34', '=', '65']",math
+145,"['sine', '(', '45', ')']",math
+146,"['cosine', '(', '23', ')']",math
+147,"['tan', '(', '45', ')']",math
+148,"['sin', '(', '54', ')']",math
+149,"['co', '(', '45', ')']",math
+150,"['sin', '(', '45', ')']",math
+151,"['tan', '(', '30', ')']",math
+152,"['5', 'factorial']",math
+153,"['10', 'factorial']",math
+154,"['3', 'factorial']",math
+155,"['2', 'factorial']",math
+156,"['0', 'factorial']",math
+157,"['log', '10']",math
+158,"['log', '15']",math
+159,"['log', '15']",math
+160,"['log', '40']",math
+161,"['log', '17']",math
+162,"['co', '(', '5', ')']",math
+163,"['tan', '(', '20', ')']",math
+164,"['mod', '-4']",math
+165,"['mod', '-45']",math
+166,"['mod', '40']",math
+167,"['mod', '13']",math
+168,"['exp', '20']",math
+169,"['exp', '3']",math
+170,"['exp', '4']",math
+171,"['exp', '7']",math
+172,['yo'],chat
+173,['hello'],chat
+174,['hi'],chat
+175,"['good', 'morning']",chat
+176,"['good', 'afternoon']",chat
+177,"['good', 'evening']",chat
+178,['hey'],chat
+179,"[""'s"", '?']",chat
+180,[],chat
+181,['love'],chat
+182,['life'],chat
+183,"['chat', 'bot']",chat
+184,"['need', 'help']",chat
+185,['miss'],chat
+186,['friend'],chat
+187,"['want', 'u', 'friend']",chat
+188,['girlfriend'],chat
+189,['girlfriend'],chat
+190,['clever'],chat
+191,"['get', 'smarter']",chat
+192,"['must', 'learn']",chat
+193,"['date', 'birthday']",chat
+194,"[""'s"", 'birthday']",chat
+195,"[""'s"", 'birthday', 'date']",chat
+196,['born'],chat
+197,"['ho', 'owner', '?']",chat
+198,"['make', '?']",chat
+199,"['name', 'maker']",chat
+200,"['cod', '?']",chat
+201,"['Who', 'creator', '?']",chat
+202,['gorgeous'],chat
+203,['handsome'],chat
+204,"['look', 'awesome']",chat
+205,"[""'s"", 'right']",chat
+206,"[""'s"", 'truth']",chat
+207,"[""'s"", 'true']",chat
+208,['correct'],chat
+209,['right'],chat
+210,"['good', 'job']",chat
+211,"['well', 'do']",chat
+212,"['nice', 'work']",chat
+213,"['I', 'question']",chat
+214,"['I', 'want', 'answer']",chat
+215,"['I', 'want', 'answer']",chat
+216,"['day', '?']",chat
+217,['fire'],chat
+218,"['I', 'fire']",chat
+219,"[""n't"", 'work', 'anymore']",chat
+220,"[""'re"", 'work', 'together', 'anymore']",chat
+221,"['let', ""'s"", 'play', 'game']",chat
+222,"['see', 'soon']",chat
+223,"['see', 'later']",chat
+224,"['see', 'later']",chat
+225,['fun'],chat
+226,"[""'s"", 'hobby']",chat
+227,"['tell', 'hobby']",chat
+228,['right'],chat
+229,"[""'s"", 'right']",chat
+230,"[""'s"", 'wrong']",chat
+231,"['annoy', 'much']",chat
+232,"[""'re"", 'incredibly', 'annoy']",chat
+233,"['I', 'find', 'annoy']",chat
+234,['annoy'],chat
+235,"[""'re"", 'annoy']",chat
+236,"[""'s"", 'name']",chat
+237,"['I', 'know']",chat
+238,['?'],chat
+239,"['developer', '?']",chat
+240,['chatbot'],chat
+241,['bot'],chat
+242,['chatbot'],chat
+243,['bot'],chat
+244,['bot'],chat
+245,['twitter'],media
+246,['instagram'],media
+247,['tweet'],media
+248,"['help', 'tweet']",media
+249,['tweet'],media
+250,['tweet'],media
+251,"['help', 'post', 'twitter']",media
+252,"['post', 'twitter']",media
+253,"['twitter', 'post']",media
+254,"['let', ""'s"", 'post', 'twitter']",media
+255,"['let', ""'s"", 'tweet']",media
+256,"['help', 'tweet']",media
+257,"['let', 'update', 'something', 'twitter']",media
+258,"['let', ""'s"", 'say', 'something', 'twitter']",media
+259,"['help', 'say', 'something', 'twitter']",media
+260,"['tweeting', 'time']",media
+261,"['time', 'tweet']",media
+262,"['let', ""'s"", 'tweet']",media
+263,"[""'s"", 'tweeting', 'time']",media
+264,"['let', ""'s"", 'go', 'active', 'twitter']",media
+265,"['let', ""'s"", 'say', 'something', 'twitter']",media
+266,"['something', 'say', 'twitter']",media
+267,"['let', ""'s"", 'post', 'instagram']",media
+268,"['let', ""'s"", 'post', 'gram']",media
+269,"['let', 'share', 'something', 'instagram']",media
+270,"['let', 'share', 'something', 'twitter']",media
+271,"['let', ""'s"", 'go', 'active', 'instagram']",media
+272,"['help', 'post', 'something', 'instagram']",media
+273,"['help', 'post', 'instagram']",media
+274,"['let', 'update', 'status', 'instagram']",media
+275,"['help', 'update', 'status', 'instagram']",media
+276,"['instagram', 'time']",media
+277,"[""'s"", 'time', 'instagram']",media
+278,"['time', 'instagram']",media
+279,"['instagram', 'post']",media
+280,"['let', 'go', 'gram']",media
+281,"['post', 'instagram']",media
+282,"['post', 'instagram']",media
+283,"['post', 'twitter']",media
+284,"['post', 'gram']",media
+285,"['post', 'instagram']",media
+286,"['post', 'twitter']",media
+287,"['post', 'instagram']",media
+288,"['try', 'post', 'instagram']",media
+289,"['favor', 'post', 'instagram']",media
+290,"['favor', 'post', 'twitter']",media
+291,"['try', 'post', 'twitter']",media
+292,"['post', 'twitter']",media
+293,"['post', 'instagram']",media
+294,"['post', 'twitter']",media
+295,"['post', 'something', 'instagram']",media
+296,"['post', 'something', 'twitter']",media
+297,"['help', 'post', 'instagram']",media
+298,"['help', 'post', 'twitter']",media
+299,"['help', 'post', 'something', 'twitter']",media
+300,['note'],note
+301,['write'],note
+302,['note'],note
+303,"['take', 'note']",note
+304,['write'],note
+305,"['need', 'write']",note
+306,"['need', 'write']",note
+307,"['need', 'note']",note
+308,"['need', 'note']",note
+309,"['take', 'note']",note
+310,"['want', 'remember']",note
+311,"['want', 'remember']",note
+312,['note'],note
+313,['write'],note
+314,['remember'],note
+315,['write'],note
+316,"['take', 'note']",note
+317,"['help', 'note', 'something']",note
+318,"['help', 'write', 'something']",note
+319,"['help', 'store']",note
+320,"['store', 'please']",note
+321,['store'],note
+322,"['store', 'note']",note
+323,['remember'],note
+324,"[""n't"", 'forget']",note
+325,"[""n't"", 'forget']",note
+326,"['make', 'sure', 'remember']",note
+327,"['store', 'file']",note
+328,"['write', 'file']",note
+329,"['note', 'file']",note
+330,['save'],note
+331,['save'],note
+332,"['save', 'information']",note
+333,"['save', 'file']",note
+334,"['note', 'information']",note
+335,"['write', 'information']",note
+336,"['save', 'something', 'please']",note
+337,['save'],note
+338,['remember'],note
+339,['remember'],note
+340,['save'],note
+341,['note'],note
+342,['write'],note
+343,"['please', 'remember']",note
+344,"['please', 'note']",note
+345,"['keep', 'note']",note
+346,"['keep', 'note', 'something']",note
+347,"['keep', 'file']",note
+348,['keep'],note
+349,"['help', 'keep', 'note']",note
+350,"['temperature', 'sun']",facts
+351,"['temperature', 'moon']",facts
+352,"['radius', 'earth']",facts
+353,"['radius', 'moon']",facts
+354,"['radius', 'sun']",facts
+355,"['boil', 'point', 'water']",facts
+356,"['number', 'human', 'teeth']",facts
+357,"['life', 'span', 'human']",facts
+358,"['life', 'span', 'dog']",facts
+359,"['boil', 'point', 'alcohol']",facts
+360,"['mass', 'earth']",facts
+361,"['mass', 'moon']",facts
+362,"['sun', 'rise']",facts
+363,"['sun', 'set']",facts
+364,"['energy', 'sun']",facts
+365,"['average', 'room', 'temperature']",facts
+366,"['depth', 'sea']",facts
+367,"['speed', 'lion']",facts
+368,"['speed', 'light']",facts
+369,"['speed', 'sound']",facts
+370,"['number', 'planet']",facts
+371,"['speed', 'earth', 'revolution']",facts
+372,"['value', 'pi']",facts
+373,"['hard', 'metal']",facts
+374,"['soft', 'metal']",facts
+375,"['temperature', 'lava']",facts
+376,"['minute', 'day']",facts
+377,"['second', 'day']",facts
+378,"['second', 'year']",facts
+379,"['minute', 'year']",facts
+380,"['acceleration', 'due', 'gravity']",facts
+381,"['much', 'iron', '1', 'cup', 'fresh', 'orange', 'juice', '?']",facts
+382,"['many', 'people', '20', 'pound', 'turkey', 'feed']",facts
+383,"['many', 'cup', 'water', 'person', 'drink', 'day']",facts
+384,"['many', 'meter', 'make', 'mile']",facts
+385,"['many', 'inch', 'make', 'mile']",facts
+386,"['many', 'foot', 'make', 'mile']",facts
+387,['carbon'],facts
+388,['zinc'],facts
+389,['aluminium'],facts
+390,['oxygen'],facts
+391,"['ruler', 'measure']",facts
+392,"['price', 'gasoline', 'Dallas']",facts
+393,"['dollar', 'rate']",facts
+394,"['dollar', 'pound', 'rate']",facts
+395,"['velocity', 'rain', 'fall']",facts
+396,"['cedi', 'dollar']",facts
+397,"['pound', 'cedis']",facts
+398,"['naira', 'cedi']",facts
+399,"['naira', 'dollar']",facts
+400,"['United', 'States', 'railway', 'length']",facts
+401,"['Apollo', '11']",facts
+402,['apollo'],facts
+403,"['total', 'length', 'road', 'Spain']",facts
+404,"['charge', 'oxygen']",facts
+405,"['atomic', 'number', 'oxygen']",facts
+406,"['charge', 'nitrogen']",facts
+407,"['atomic', 'number', 'nitrogen']",facts
+408,"['send', 'email', 'Dr', 'steve']",email
+409,['time'],time
+410,['time'],time
+411,['time'],time
+412,"['tell', 'time']",time
+413,"['let', 'know', 'time']",time
+414,"['say', 'time']",time
+415,"['old', 'day']",time
+416,"['time', 'please']",time
+417,"['want', 'time']",time
+418,"['help', 'know', 'time']",time
+419,"['give', 'update', 'time', 'please']",time
+420,"['movie', 'time']",req_
+421,"['movie', 'please']",req_
+422,"['turn', 'light']",req_
+423,"['turn', 'light']",req_
+424,"['switch', 'light', 'switch', 'light']",req_
+425,"['switch', 'light']",req_
+426,"['light', 'please']",req_
+427,"['dim', 'light']",req_
+428,"['need', 'light']",req_
+429,"['turn', 'tv']",req_
+430,"['turn', 'tele']",req_
+431,"['turn', 'televison']",req_
+432,"['turn', 'microwave']",req_
+433,"['turn', 'microwave']",req_
+434,"['switch', 'fridge']",req_
+435,"['switch', 'heater']",req_
+436,"['check', 'door']",req_
+437,['door'],req_
+438,"['play', 'music']",req_
+439,"['music', 'play']",req_
+440,"['music', 'time']",req_
+441,"['need', 'music', 'please']",req_
+442,"['play', 'music']",req_
+443,"['music', 'time']",req_
+444,"['time', 'watch', 'something']",req_
+445,"['tell', 'day']",event
+446,"['plan', 'today']",event
+447,"['plan', 'day']",event
+448,"['today', 'free']",event
+449,"['busy', 'today']",event
+450,"['free', 'today']",event
+451,"['today', 'like']",event
+452,"['schdule', 'day']",event
+453,['plan'],event
+454,"['event', 'day']",event
+455,"['event', 'day']",event
+456,"['event', 'today']",event
+457,"['plan', 'today']",event
+458,['today'],event
+459,[],event
+460,['today'],event
+461,"['day', 'like']",event
+462,"['day', 'pack']",event
+463,"['day', 'free', 'event']",event
+464,['calender'],event
+465,['calender'],event
+466,"['calender', 'today']",event
+467,"['schedule', 'today']",event
+468,"['plan', 'today']",event
+469,"['event', 'today']",event
+470,"[""'s"", 'today']",event
+471,"['make', 'busy', 'today']",event
+472,['event'],event
+473,['schedule'],event
+474,['calender'],event
+475,"['plan', 'today']",event
+476,"['plan', 'day']",event
+477,"['give', 'event', 'day']",event
+478,"['give', 'plan', 'day']",event
+479,"['give', 'plan', 'today']",event
+480,"['give', 'summary', 'calender']",event
+481,"['give', 'summary', 'today']",event
+482,"['give', 'summary', 'today', ""'s"", 'event']",event
+483,"['give', 'summary', 'plan', 'today']",event
+484,"['give', 'summary', 'today']",event
+485,"['Brief', 'today', ""'s"", 'weather', 'report', '.']",weather
+486,"['I', 'expect', 'today', 'weather']",weather
+487,"['weather', 'report']",weather
+488,"['weather', 'update']",weather
+489,"['tell', 'weather']",weather
+490,"['Today', ""'s"", 'weather', 'pleasant', '.', 'Wo', ""n't"", '?']",weather
+491,"['tell', 'today', ""'s"", 'weather']",weather
+492,"['How', 'sunny', 'day', 'go', 'get', '?']",weather
+493,"['From', 'weather', ',', 'travel', 'option', 'safest', ':', 'aeroplane', ',', 'ship', 'car', '?']",weather
+494,"['probabilty', 'might', 'rain']",weather
+507,"['gon', 'na', 'windy', 'today']",weather
+508,"['Will', 'rain', 'today', '?']",weather
+509,"['sunny', 'rainy']",weather
+510,"['gon', 'na', 'sunny']",weather
+511,"['gon', 'na', 'rain', 'today']",weather
+512,"['Will', 'rain', 'today', '?']",weather
+513,"['How', 'weather', 'today', '?']",weather
+514,"['Information', 'today', ""'s"", 'waether']",weather
+515,"['Average', 'temperature', 'change']",weather
+516,"['Weather', 'forecast', 'tomorrow', '.']",weather
+517,"['I', 'need', 'rain', 'coat', 'today']",weather
+518,"['Prediction', 'today', ""'s"", 'weather']",weather
+519,"['Give', 'analysis', 'today', ""'s"", 'weather']",weather
+520,"['Give', 'brief', 'analysis', 'weather', 'Accra', '.']",weather
+521,"['Brief', 'weather', 'forecast', 'analysis', '.']",weather
+522,"['Tech', ',', 'beautiful', 'weather', 'today', '?']",weather
+523,"['Please', 'tell', 'cur', 'rent', 'weather', 'analysis']",weather
+524,"['Please', 'help', 'understand', 'recent', 'weather', 'condition']",weather
+525,"['I', 'need', 'umbrella', 'today']",weather
+526,"['Tech', ',', 'expect', 'weather', 'today', '?']",weather
+527,"['Tech', ',', 'expect', 'today', ""'s"", 'weather', '?']",weather
+528,"['How', 'different', 'today', ""'s"", 'weather', 'yesterday', 'tech', '?']",weather
+529,"['When', 'next', 'expect', 'stormy', 'rain', '?']",weather
+530,"['How', 'many', 'day', 'hamster', '?']",weather
+531,"['Windy', 'sunny', '?']",weather
+532,"['Is', 'today', 'sunny', 'day', '?']",weather
+533,"['What', 'odds', 'rain', 'today', '?']",weather
