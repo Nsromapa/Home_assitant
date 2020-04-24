@@ -24,6 +24,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import email, smtplib, ssl
+from nltk import pos_tag
 
 
 
@@ -106,131 +107,152 @@ def speech_to_text():
         print("Sorry it seems you are offline.")
 
 def text_with_system():
-    user_input = input("")
-    print("")
-    return user_input
+    try:
+        user_input = input("")
+        print("")
+        return user_input
+    except Exception:
+        pass
 
 
     
  #main function this is well all the intelligence will go!   
 
 def send_email():
-    talkback("I've got you boss!")
-    talkback("what is the email of the recipient?")
-    recipient = input("Enter email here: ")
-    talkback("got it")
-    talkback("What do you want me to send?")
-    content = input("Enter message here: ")
+    try:
+        talkback("I've got you boss!")
+        talkback("what is the email of the recipient?")
+        recipient = input("Enter email here: ")
+        talkback("got it")
+        talkback("What do you want me to send?")
+        content = input("Enter message here: ")
 
-    mail = smtplib.SMTP("smtp.gmail.com",587)
+        mail = smtplib.SMTP("smtp.gmail.com",587)
 
-    mail.ehlo()
+        mail.ehlo()
 
-    mail.starttls()
-    mail.login('enninfrancis47@gmail.com', 'sldworsejfxrbveq')
+        mail.starttls()
+        mail.login('enninfrancis47@gmail.com', 'sldworsejfxrbveq')
 
-    mail.sendmail('enninfrancis47@gmail.com', recipient , content)
-    mail.close()
-    talkback("Email has been sent")
-    talkback("Anything else i can help you with?")
+        mail.sendmail('enninfrancis47@gmail.com', recipient , content)
+        mail.close()
+        talkback("Email has been sent")
+        talkback("Anything else i can help you with?")
+    except Exception:
+        pass
 
 def authenticate_google():
-    """Shows basic usage of the Google Calendar API.
-    Prints the start and name of the next 10 events on the user's calendar.
-    """
-    creds = None
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
-            creds = pickle.load(token)
+    try:
+        """Shows basic usage of the Google Calendar API.
+        Prints the start and name of the next 10 events on the user's calendar.
+        """
+        creds = None
+        if os.path.exists('token.pickle'):
+            with open('token.pickle', 'rb') as token:
+                creds = pickle.load(token)
 
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'I:/Nsromapa/credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
+        if not creds or not creds.valid:
+            if creds and creds.expired and creds.refresh_token:
+                creds.refresh(Request())
+            else:
+                flow = InstalledAppFlow.from_client_secrets_file(
+                    'I:/Nsromapa/credentials.json', SCOPES)
+                creds = flow.run_local_server(port=0)
 
-        with open('token.pickle', 'wb') as token:
-            pickle.dump(creds, token)
+            with open('token.pickle', 'wb') as token:
+                pickle.dump(creds, token)
 
-    service = build('calendar', 'v3', credentials=creds)
+        service = build('calendar', 'v3', credentials=creds)
 
-    return service
+        return service
+    except Exception:
+        pass
+
+    
 
 def get_events(day, service):
     # Call the Calendar API
-    date = datetime.datetime.combine(day, datetime.datetime.min.time())
-    end_date = datetime.datetime.combine(day, datetime.datetime.max.time())
-    utc = pytz.UTC
-    date = date.astimezone(utc)
-    end_date = end_date.astimezone(utc)
+    try:
+        date = datetime.datetime.combine(day, datetime.datetime.min.time())
+        end_date = datetime.datetime.combine(day, datetime.datetime.max.time())
+        utc = pytz.UTC
+        date = date.astimezone(utc)
+        end_date = end_date.astimezone(utc)
 
-    events_result = service.events().list(calendarId='primary', timeMin=date.isoformat(), timeMax=end_date.isoformat(),
-                                        singleEvents=True,
-                                        orderBy='startTime').execute()
-    events = events_result.get('items', [])
+        events_result = service.events().list(calendarId='primary', timeMin=date.isoformat(), timeMax=end_date.isoformat(),
+                                            singleEvents=True,
+                                            orderBy='startTime').execute()
+        events = events_result.get('items', [])
 
-    if not events:
-        talkback('No upcoming events found.')
-    else:
-        talkback(f"You have {len(events)} events on this day.")
+        if not events:
+            talkback('No upcoming events found.')
+        else:
+            talkback(f"You have {len(events)} events on this day.")
 
-        for event in events:
-            start = event['start'].get('dateTime', event['start'].get('date'))
-            print(start, event['summary'])
-            start_time = str(start.split("T")[1].split("-")[0])
-            if int(start_time.split(":")[0]) < 12:
-                start_time = start_time + "am"
-            else:
-                start_time = str(int(start_time.split(":")[0])-12) + start_time.split(":")[1]
-                start_time = start_time + "pm"
+            for event in events:
+                start = event['start'].get('dateTime', event['start'].get('date'))
+                print(start, event['summary'])
+                start_time = str(start.split("T")[1].split("-")[0])
+                if int(start_time.split(":")[0]) < 12:
+                    start_time = start_time + "am"
+                else:
+                    start_time = str(int(start_time.split(":")[0])-12) + start_time.split(":")[1]
+                    start_time = start_time + "pm"
 
-            talkback(event["summary"] + " at " + start_time)
+                talkback(event["summary"] + " at " + start_time)
+    except Exception:
+        pass
 
 def note():
-    talkback("No problem boss!")
-    talkback("What is it you want me to note down please?")
-    content = input("Enter note: ")
-    date = datetime.datetime.now()
-    talkback("how should i name this file?")
-    name = input("Enter file name: ")
-    file_name = str(name)+".txt"
-    with open('I:/Nsromapa/notes/'+file_name, "w") as f:
-        f.write(content)
+    try:
+        talkback("No problem boss!")
+        talkback("What is it you want me to note down please?")
+        content = input("Enter note: ")
+        date = datetime.datetime.now()
+        talkback("how should i name this file?")
+        name = input("Enter file name: ")
+        file_name = str(name)+".txt"
+        with open('I:/Nsromapa/notes/'+file_name, "w") as f:
+            f.write(content)
 
-    #subprocess.Popen(["notepad.exe", file_name])
-    talkback("it's done")
+        #subprocess.Popen(["notepad.exe", file_name])
+        talkback("it's done")
+    except Exception:
+        pass
 
 def get_date(text):
-    text = text.lower()
-    today = datetime.date.today()
+    try:
+        text = text.lower()
+        today = datetime.date.today()
 
-    if text.count("today") > 0:
-        return today
+        if text.count("today") > 0:
+            return today
 
-    day = -1
-    day_of_week = -1
-    month = -1
-    year = today.year
+        day = -1
+        day_of_week = -1
+        month = -1
+        year = today.year
 
-    for word in text.split():
-        if word in MONTHS:
-            month = MONTHS.index(word) + 1
-        elif word in DAYS:
-            day_of_week = DAYS.index(word)
-        elif word.isdigit():
-            day = int(word)
-        else:
-            for ext in DAY_EXTENTIONS:
-                found = word.find(ext)
-                if found > 0:
-                    try:
-                        day = int(word[:found])
-                    except:
-                        pass
+        for word in text.split():
+            if word in MONTHS:
+                month = MONTHS.index(word) + 1
+            elif word in DAYS:
+                day_of_week = DAYS.index(word)
+            elif word.isdigit():
+                day = int(word)
+            else:
+                for ext in DAY_EXTENTIONS:
+                    found = word.find(ext)
+                    if found > 0:
+                        try:
+                            day = int(word[:found])
+                        except:
+                            pass
+    except Exception:
+        pass
 
     # THE NEW PART STARTS HERE
+    
     if month < today.month and month != -1:  # if the month mentioned is before the current month set the year to the next
         year = year+1
 
@@ -268,6 +290,8 @@ def wiki(x):
         talkback(x)
     except ConnectionError:
         talkback("Sorry I'm having a problem connecting")
+    except Exception:
+        pass
 
 def req_song():
     pass
@@ -276,130 +300,147 @@ def req_google_search():
     pass
 
 def ques_ans_math_facts(user_input):
-    client = wolframalpha.Client("G2HRK3-6AUQYWGTL2")
-    query = str(user_input)
-    res = client.query(query)
-    result = next(res.results).text
-    return result
+    try:
+        client = wolframalpha.Client("G2HRK3-6AUQYWGTL2")
+        query = str(user_input)
+        res = client.query(query)
+        result = next(res.results).text
+        return result
+    except Exception:
+        pass
 
-def weather_condition():
-    owm = pyowm.OWM("3055fe5f3b10fc9a5c44ff2d4cab6102")
-    talkback("which city or country do you wish to get their weather info")
-    city = input("Input city or country here: ")
+def weather_condition(city):
+    try:
+        owm = pyowm.OWM("3055fe5f3b10fc9a5c44ff2d4cab6102")
+        
+        city = city
 
-    loc = owm.weather_at_place(city)
-    weather = loc.get_weather()
+        loc = owm.weather_at_place(city)
+        weather = loc.get_weather()
 
-    temp = weather.get_temperature(unit="celsius")
-    talkback("the temperature in"+" "+city+" "+"is"+ str(temp))
+        temp = weather.get_temperature(unit="celsius")
+        talkback("the temperature in"+" "+city+" "+"is"+" "+ str(int(temp['temp']))+" degrees")
+    except Exception:
+        pass
 
 def insta_post():
-    talkback("you got it boss")
-    username = '' #your username
-    password = '' #your password 
-    talkback("do you wanna upload an image?")
-    ch = input("Do you wanna upload an image?: ")
-    if ch.lower() == 'yes':
-        img_url = ""
-        talkback("What's the name of the image file?")
-        image_name = input("Enter image name: ")
-        image = img_url+image_name
-    else:
-        image=''
-    talkback("Do you wish to add a text?")
-    ch = input("Enter here: ")
+    try:
+        talkback("you got it boss")
+        username = '' #your username
+        password = '' #your password 
+        talkback("do you wanna upload an image?")
+        ch = input("Do you wanna upload an image?: ")
+        if ch.lower() == 'yes':
+            img_url = ""
+            talkback("What's the name of the image file?")
+            image_name = input("Enter image name: ")
+            image = img_url+image_name
+        else:
+            image=''
+        talkback("Do you wish to add a text?")
+        ch = input("Enter here: ")
 
-    if ch.lower() == 'yes':
-            text = input("Enter text here: ")
-            talkback("You can add hashtags if you want")
-            tags = input("Enter hashtags: ")
-            text = text + '\r\n' + tags
-    with client(username, password) as cli:
-        cli.upload(image, text)
-    talkback("it's posted!, anything else i can do for you?")
+        if ch.lower() == 'yes':
+                text = input("Enter text here: ")
+                talkback("You can add hashtags if you want")
+                tags = input("Enter hashtags: ")
+                text = text + '\r\n' + tags
+        with client(username, password) as cli:
+            cli.upload(image, text)
+        talkback("it's posted!, anything else i can do for you?")
+    except Exception:
+        pass
 
 def tweet():
-    talkback("I am ready to tweet")
-    # personal information 
-    consumer_key ="xxxxxxxxxxxxxxxx"
-    consumer_secret ="xxxxxxxxxxxxxxxx"
-    access_token ="xxxxxxxxxxxxxxxx"
-    access_token_secret ="xxxxxxxxxxxxxxxx"
+    try:
+        talkback("I am ready to tweet")
+        # personal information 
+        consumer_key ="xxxxxxxxxxxxxxxx"
+        consumer_secret ="xxxxxxxxxxxxxxxx"
+        access_token ="xxxxxxxxxxxxxxxx"
+        access_token_secret ="xxxxxxxxxxxxxxxx"
 
-    # authentication 
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret) 
-    auth.set_access_token(access_token, access_token_secret) 
+        # authentication 
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret) 
+        auth.set_access_token(access_token, access_token_secret) 
 
-    api = tweepy.API(auth) 
-    talkback("what do you want me to help you tweet?")
-    tweet = input("Enter tweet here: ")
-    talkback("do you wish to add an image file?")
-    ch = input("Enter Yes or No: ")
-    if ch.lower() == 'yes':
-        image_name = input("Enter image name: ")  
-        img_url = ''
+        api = tweepy.API(auth) 
+        talkback("what do you want me to help you tweet?")
+        tweet = input("Enter tweet here: ")
+        talkback("do you wish to add an image file?")
+        ch = input("Enter Yes or No: ")
+        if ch.lower() == 'yes':
+            image_name = input("Enter image name: ")  
+            img_url = ''
 
-        image_path =image_name+img_url+".jpg" 
-    else:
+            image_path =image_name+img_url+".jpg" 
+        else:
+            pass
+        # to attach the media file 
+        status = api.update_with_media(image_path, tweet) 
+        api.update_status(status = tweet)
+
+        talkback("It's done boss") 
+    except Exception:
         pass
-    # to attach the media file 
-    status = api.update_with_media(image_path, tweet) 
-    api.update_status(status = tweet)
-
-    talkback("It's done boss") 
 
 def email_file_attach():
-    talkback('What is the subject?')
-    subject = input('Enter Subject: ')
-    talkback("let's get to the body of the email")
-    body = input('Enter body: ')
-    sender_email = 'enninfrancis47@gmail.com'
-    receiver_email = input('Enter receipient email: ')
-    password = 'sldworsejfxrbveq'
+    try:
+        talkback('What is the subject?')
+        subject = input('Enter Subject: ')
+        talkback("let's get to the body of the email")
+        body = input('Enter body: ')
+        sender_email = 'enninfrancis47@gmail.com'
+        receiver_email = input('Enter receipient email: ')
+        password = 'sldworsejfxrbveq'
 
-    # Create a multipart message and set headers
-    message = MIMEMultipart()
-    message["From"] = sender_email
-    message["To"] = receiver_email
-    message["Subject"] = subject
-    # message["Bcc"] = receiver_email  # Recommended for mass emails
+        # Create a multipart message and set headers
+        message = MIMEMultipart()
+        message["From"] = sender_email
+        message["To"] = receiver_email
+        message["Subject"] = subject
+        # message["Bcc"] = receiver_email  # Recommended for mass emails
 
-    # Add body to email
-    message.attach(MIMEText(body, "plain"))
-    talkback('What is the name of the file to be attached? ')
-    filename = input('Enter file name: ')  # In same directory as script
-    filename = 'files/'+filename
+        # Add body to email
+        message.attach(MIMEText(body, "plain"))
+        talkback('What is the name of the file to be attached? ')
+        filename = input('Enter file name: ')  # In same directory as script
+        filename = 'files/'+filename
 
-    # Open PDF file in binary mode
-    with open(filename, "rb") as attachment:
-        part = MIMEBase("application", "octet-stream")
-        part.set_payload(attachment.read())
+        # Open PDF file in binary mode
+        with open(filename, "rb") as attachment:
+            part = MIMEBase("application", "octet-stream")
+            part.set_payload(attachment.read())
 
-    # Encode file in ASCII characters to send by email    
-    encoders.encode_base64(part)
+        # Encode file in ASCII characters to send by email    
+        encoders.encode_base64(part)
 
-    # Add header as key/value pair to attachment part
-    part.add_header(
-        "Content-Disposition",
-        f"attachment; filename= {filename}",
-    )
+        # Add header as key/value pair to attachment part
+        part.add_header(
+            "Content-Disposition",
+            f"attachment; filename= {filename}",
+        )
 
-    # Add attachment to message and convert message to string
-    message.attach(part)
-    text = message.as_string()
+        # Add attachment to message and convert message to string
+        message.attach(part)
+        text = message.as_string()
 
-    # Log in to server using secure context and send email
-    context = ssl.create_default_context()
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, text)
+        # Log in to server using secure context and send email
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+            server.login(sender_email, password)
+            server.sendmail(sender_email, receiver_email, text)
 
-    talkback('Email has been sent!')
-
-
+        talkback('Email has been sent!')
+    except Exception:
+        pass
+    
 
 #initialazing some variables
-SERVICE = authenticate_google()
+try:
+    SERVICE = authenticate_google()
+except Exception:
+    talkback('sorry i am having problem connecting to the internet')
 
 print("")
 print("Hello, how do you wish to communicate with me?")
@@ -413,6 +454,7 @@ except Exception:
 
 #this is the main function, most of the intelligence will go here!
 def main_sys(user_input):
+    user_input =user_input.lower()
     time_now = datetime.datetime.now().hour
     time_now_min = datetime.datetime.now().minute
     category = ""
@@ -438,6 +480,7 @@ def main_sys(user_input):
         else:
             time_s = str(time_now)
             talkback("its "+time_s+" pm")
+
     elif user_input in evening:
         if time_now <12:
             talkback("its"+time_s+"in the morning")
@@ -453,12 +496,8 @@ def main_sys(user_input):
 
 
 
-    else:
-       
+    else:    
         data = input_process(user_input)
-
-
-        
         try:
             category = classifier.predict(data)
         except Exception:
@@ -498,7 +537,21 @@ def main_sys(user_input):
             talkback("I don't understand you!")
 
     elif category == 'weather':
-        weather_condition()
+        weather_req = user_input.split()
+        weather_req = pos_tag(weather_req)
+        weather_req_loc = []
+        for word,tag  in weather_req:
+            if tag == 'NN' and word != 'weather':
+                weather_req_loc.append(word)
+        num_of_city = len(weather_req_loc)
+        counter = 0
+        for i in weather_req_loc:
+            weather_condition(i)
+            counter+=1
+            if counter < num_of_city and num_of_city ==2:
+                talkback('and')
+            elif counter < num_of_city and num_of_city >2:
+                talkback('also')
 
     elif category == ' req_':
         pass
