@@ -25,6 +25,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import email, smtplib, ssl
 from nltk import pos_tag
+from threading import *
 
 
 
@@ -45,25 +46,29 @@ note_ = ['note this down','remember this','remember this for me','write this dow
 calender_ = ['what do i have today?', 'what are my plans for today?']
 email_ = ["email", 'mail']
 wolf_ =['+','-','*', '/', '=']
-
-
-#Voice set to male by default
 i=0
+x = None
+choice = ''
+
 
 #Loading classifier 
 classifier = pickle.load(open('classifier_model.sav', 'rb'))
 
 
 #functions of the system
-def talkback(x):
+def talkback(y):
+    def onWord(name, location, length):
+        global x
+        if x >2:
+            talk.stop()
    # time.sleep(1)
     talk = pyttsx3.init()
     rate = talk.getProperty('rate')
     talk.setProperty('rate', rate-10)
     voices = talk.getProperty('voices')
     talk.setProperty('voice', voices[i].id)
-    talk.say(x)
-  #  time.sleep(1)
+    talk.connect('started-word', onWord)
+    talk.say(y)
     talk.runAndWait()
 
 
@@ -110,7 +115,7 @@ def text_with_system():
     try:
         user_input = input("")
         print("")
-        return user_input
+        return user_input.lower()
     except Exception:
         pass
 
@@ -287,11 +292,13 @@ def wiki(x):
     try:
         #x =wikipedia.summary(filtered, sentences=2)
         x =wikipedia.summary(tokenized, sentences=2)
-        talkback(x)
+        speech_back = Thread(target=talkback, args=[x])
+        speech_back.start()
+        # talkback(x)
     except ConnectionError:
         talkback("Sorry I'm having a problem connecting")
-    except Exception:
-        pass
+    except Exception as e:
+        print(e)
 
 def req_song():
     pass
@@ -437,6 +444,10 @@ def email_file_attach():
     
 
 #initialazing some variables
+
+texting_input = Thread(target=text_with_system)
+
+
 try:
     SERVICE = authenticate_google()
 except Exception:
@@ -576,94 +587,6 @@ def main_sys(user_input):
 
 
 
-    
-    #if user_input in greetings_user:
-        #talkback(random.choice(greeting_reponse))
-
-    #elif user_input in morning:
-        #if time_now <12:
-         #   talkback("good morning")
-        #elif time_now >= 12 and time_now < 16:
-         #   time_s = str(time_now) 
-          #  talkback("its "+time_s+" pm, good afternoon")
-        #else:
-         #   time_s = str(time_now)
-          #  talkback("its "+time_s+" pm, good evening")
-
-    #elif user_input in afternoon:
-        #if time_now <12:
-         #   talkback("its"+time_s+"in the morning")
-        #elif time_now >= 12 and time_now < 16:
-         #   time_s = str(time_now) 
-          #  talkback("good afternoon, is there anything i can do for you?")
-        #else:
-         #   time_s = str(time_now)
-          #  talkback("its "+time_s+" pm")
-    
-    #elif user_input in evening:
-      #  if time_now <12:
-       #     talkback("its"+time_s+"in the morning")
-        #elif time_now >= 12 and time_now < 16:
-         #   time_s = str(time_now) 
-          #  talkback("It's still afternoon, is there anything i can do for you?")
-        #else:
-         #   time_s = str(time_now)
-          #  talkback("Good evening, how was your day?")
-  
-    #elif "how do you do" in user_input:
-        #talkback("how do you do?")
-
-    #elif 'switch voice to male' in user_input:
-        #i=0
-        #talkback("This is just a trial and i willl try and make")
-    
-    #elif 'switch voice to female' in user_input:
-      #  i=1
-       # talkback("This is just a trial and i willl try and make")
-
-    #elif user_input in time_asking:
-     #   if time_now>12:
-      #      time_ = time_now-12
-       #     time_min = datetime.datetime.now().minute
-        #    time_req = str(time_)+" "+str(time_min)+"pm"
-         #   talkback(time_req)
-        #else:
-        #    time_ = time_now
-         #   time_min = datetime.datetime.now().minute
-          #  time_req = str(time_)+" "+str(time_min)+"am"
-           # talkback(time_req)
-    
-    #elif user_input in email_:
-       # send_email()
-    
-    #elif user_input in note_:
-     #   note()
-    
-    #elif user_input in wolf_:
-    #    talkback(ques_ans_math_facts(user_input))
-    
-    #elif 'who is' in user_input:
-    #    talkback(wiki(user_input))
-
-    #elif user_input in calender_:
-    #    date_ = get_date(user_input)
-     #   if date_:
-      #      get_events(date_, SERVICE)
-       # else:
-        #    talkback("I don't understand you!")
-    
-    #elif 'weather' in user_input:
-    #    weather_condition()        
-
-    #elif 'instagram' in user_input:
-    #    insta_post()
-
-    #else:
-    #    talkback("Sorry i didn't get you, can you come again?")
-    
-            
-   
-
 while True:
     if int(option)==1:
         choice = text_with_system()
@@ -671,5 +594,12 @@ while True:
         choice = speech_to_text()
     else:
         print("Your input is not valid!")
+    try:
+        if int(choice) >2:
+            x = 3
+        else:
+            x = 0
+    except Exception:
+        pass
     main_sys(choice)
     choice = ""
