@@ -25,7 +25,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import email, smtplib, ssl
 from nltk import pos_tag
-from threading import *
+from correct_chatbot.Nsromapa import chatbot_main
+
 
 
 
@@ -57,17 +58,12 @@ classifier = pickle.load(open('classifier_model.sav', 'rb'))
 
 #functions of the system
 def talkback(y):
-    def onWord(name, location, length):
-        global x
-        if x >2:
-            talk.stop()
-   # time.sleep(1)
+
     talk = pyttsx3.init()
     rate = talk.getProperty('rate')
     talk.setProperty('rate', rate-10)
     voices = talk.getProperty('voices')
     talk.setProperty('voice', voices[i].id)
-    talk.connect('started-word', onWord)
     talk.say(y)
     talk.runAndWait()
 
@@ -173,8 +169,6 @@ def authenticate_google():
     except Exception:
         pass
 
-    
-
 def get_events(day, service):
     # Call the Calendar API
     try:
@@ -212,7 +206,9 @@ def note():
     try:
         talkback("No problem boss!")
         talkback("What is it you want me to note down please?")
-        content = input("Enter note: ")
+        print("Listening....")
+        content = speech_to_text()
+        talkback("Got it.")
         date = datetime.datetime.now()
         talkback("how should i name this file?")
         name = input("Enter file name: ")
@@ -287,14 +283,10 @@ def wiki(x):
     #tokenized = word_tokenize(x)
     talkback("A second boss")
     tokenized = x.split()
-    #stop_words = stopwords.words("english")    
-    #filtered = [w for w in tokenized if not w in stop_words]
     try:
-        #x =wikipedia.summary(filtered, sentences=2)
+
         x =wikipedia.summary(tokenized, sentences=2)
-        speech_back = Thread(target=talkback, args=[x])
-        speech_back.start()
-        # talkback(x)
+        talkback(x)
     except ConnectionError:
         talkback("Sorry I'm having a problem connecting")
     except Exception as e:
@@ -445,7 +437,6 @@ def email_file_attach():
 
 #initialazing some variables
 
-texting_input = Thread(target=text_with_system)
 
 
 try:
@@ -465,7 +456,10 @@ except Exception:
 
 #this is the main function, most of the intelligence will go here!
 def main_sys(user_input):
-    user_input =user_input.lower()
+    try:
+        user_input =user_input.lower()
+    except Exception:
+        pass
     time_now = datetime.datetime.now().hour
     time_now_min = datetime.datetime.now().minute
     category = ""
@@ -486,7 +480,7 @@ def main_sys(user_input):
         if time_now <12:
             talkback("its"+time_s+"in the morning")
         elif time_now >= 12 and time_now < 16:
-            time_s = str(time_now) 
+            time_s = str(time_now - 12) 
             talkback("good afternoon, is there anything i can do for you?")
         else:
             time_s = str(time_now)
@@ -496,7 +490,7 @@ def main_sys(user_input):
         if time_now <12:
             talkback("its"+time_s+"in the morning")
         elif time_now >= 12 and time_now < 16:
-            time_s = str(time_now) 
+            time_s = str(time_now - 12) 
             talkback("It's still afternoon, is there anything i can do for you?")
         else:
             time_s = str(time_now)
@@ -513,9 +507,11 @@ def main_sys(user_input):
             category = classifier.predict(data)
         except Exception:
             talkback("Sorry i didn't get you, can you come again?")
+            category = ""
     
     if category == 'chat':
-        pass
+        response = chatbot_main(user_input)
+        talkback(response)
 
     elif category == 'def':
         wiki(user_input)
@@ -588,18 +584,18 @@ def main_sys(user_input):
 
 
 while True:
-    if int(option)==1:
-        choice = text_with_system()
-    elif int(option) ==2:
-        choice = speech_to_text()
-    else:
-        print("Your input is not valid!")
     try:
-        if int(choice) >2:
-            x = 3
+        if int(option)==1:
+            choice = text_with_system()
+        elif int(option) ==2:
+            choice = speech_to_text()
         else:
-            x = 0
+            print("Your input is not valid!")
     except Exception:
-        pass
+        print("Invalid Input")
+    
+    
+    # main_sys(choice)
+    time.sleep(0.5)
     main_sys(choice)
     choice = ""
